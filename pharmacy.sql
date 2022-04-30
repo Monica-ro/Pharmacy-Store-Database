@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 01, 2022 at 12:37 AM
+-- Generation Time: May 01, 2022 at 12:59 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -45,8 +45,8 @@ CREATE TABLE `Doctor` (
 CREATE TABLE `drug` (
   `id` int(19) NOT NULL,
   `name` varchar(19) NOT NULL,
-  `dateOfManufacture` int(19) NOT NULL,
-  `expirationDate` int(19) NOT NULL,
+  `dateOfManufacture` date NOT NULL,
+  `expirationDate` date NOT NULL,
   `drugType` varchar(19) NOT NULL,
   `manufacturerID` int(19) NOT NULL,
   `manufacturingCost` int(19) NOT NULL,
@@ -80,8 +80,8 @@ CREATE TABLE `Presecription` (
   `rxNumber` int(19) NOT NULL,
   `consumerID` int(19) NOT NULL,
   `drugID` int(19) NOT NULL,
-  `dateCreated` int(19) NOT NULL,
-  `expirationDate` int(19) NOT NULL,
+  `dateCreated` date NOT NULL,
+  `expirationDate` date NOT NULL,
   `quantity` int(19) NOT NULL,
   `numberOfRefills` int(19) NOT NULL,
   `additionalInformation` varchar(500) NOT NULL,
