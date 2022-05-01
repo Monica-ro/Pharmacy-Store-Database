@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Doctor` (
-  `ID` int(19) NOT NULL,
+  `ID` int NOT NULL,
   `FIRST_NAME` varchar(30) NOT NULL,
   `LAST_NAME` varchar(30) NOT NULL,
   `PHONE_NUM` int(19) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `Doctor` (
 --
 
 CREATE TABLE `drug` (
-  `ID` int(19) NOT NULL,
+  `ID` int NOT NULL,
   `NAME` varchar(19) NOT NULL,
   `DATE_OF_MANUFACTURE` date NOT NULL,
   `EXPIRATION_DATE` date NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `drug` (
 --
 
 CREATE TABLE `hospital` (
-  `ID` int(19) NOT NULL,
+  `ID` int NOT NULL,
   `NAME` varchar(19) NOT NULL,
   `ADDRESS` varchar(590) NOT NULL,
   `CITY` varchar(19) NOT NULL,
