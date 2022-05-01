@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 01, 2022 at 12:59 AM
+-- Generation Time: May 02, 2022 at 01:36 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -29,11 +29,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `Doctor` (
-  `id` int(19) NOT NULL,
-  `firstName` int(19) NOT NULL,
-  `lastName` int(19) NOT NULL,
-  `phoneNumber` int(19) NOT NULL,
-  `hospitalID` int(19) NOT NULL
+  `ID` int(19) NOT NULL,
+  `FIRST_NAME` varchar(30) NOT NULL,
+  `LAST_NAME` varchar(30) NOT NULL,
+  `PHONE_NUM` int(19) NOT NULL,
+  `HOSPITAL_ID` int(19) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -43,14 +43,14 @@ CREATE TABLE `Doctor` (
 --
 
 CREATE TABLE `drug` (
-  `id` int(19) NOT NULL,
-  `name` varchar(19) NOT NULL,
-  `dateOfManufacture` date NOT NULL,
-  `expirationDate` date NOT NULL,
-  `drugType` varchar(19) NOT NULL,
-  `manufacturerID` int(19) NOT NULL,
-  `manufacturingCost` int(19) NOT NULL,
-  `description` varchar(90) NOT NULL
+  `ID` int(19) NOT NULL,
+  `NAME` varchar(19) NOT NULL,
+  `DATE_OF_MANUFACTURE` date NOT NULL,
+  `EXPIRATION_DATE` date NOT NULL,
+  `DRUGTYPE` varchar(19) NOT NULL,
+  `MANUFACTURER_ID` int(19) NOT NULL,
+  `MANUFACTURING_COST` int(19) NOT NULL,
+  `DESCRIPTION` varchar(90) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -60,14 +60,14 @@ CREATE TABLE `drug` (
 --
 
 CREATE TABLE `hospital` (
-  `id` int(19) NOT NULL,
-  `name` varchar(19) NOT NULL,
-  `address` varchar(590) NOT NULL,
-  `city` varchar(19) NOT NULL,
-  `state` varchar(19) NOT NULL,
-  `zipcCode` int(19) NOT NULL,
-  `phoneNumber` int(19) NOT NULL,
-  `email` varchar(19) NOT NULL
+  `ID` int(19) NOT NULL,
+  `NAME` varchar(19) NOT NULL,
+  `ADDRESS` varchar(590) NOT NULL,
+  `CITY` varchar(19) NOT NULL,
+  `STATE` varchar(19) NOT NULL,
+  `ZIPCODE` int(19) NOT NULL,
+  `PHONE_NUMBER` int(19) NOT NULL,
+  `EMAIL` varchar(19) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -77,15 +77,15 @@ CREATE TABLE `hospital` (
 --
 
 CREATE TABLE `Presecription` (
-  `rxNumber` int(19) NOT NULL,
-  `consumerID` int(19) NOT NULL,
-  `drugID` int(19) NOT NULL,
-  `dateCreated` date NOT NULL,
-  `expirationDate` date NOT NULL,
-  `quantity` int(19) NOT NULL,
-  `numberOfRefills` int(19) NOT NULL,
-  `additionalInformation` varchar(500) NOT NULL,
-  `doctorID` int(19) NOT NULL
+  `RX_NUMBER` int(19) NOT NULL,
+  `CONSUMER_ID` int(19) NOT NULL,
+  `DRUG_ID` int(19) NOT NULL,
+  `DATE_CREATED` date NOT NULL,
+  `EXPIRATION_DATE` date NOT NULL,
+  `QUANTITY` int(19) NOT NULL,
+  `NUMBER_OF_REFILLS` int(19) NOT NULL,
+  `ADDITIONAL_INFORMATION` varchar(500) NOT NULL,
+  `DOCTOR_ID` int(19) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -96,25 +96,28 @@ CREATE TABLE `Presecription` (
 -- Indexes for table `Doctor`
 --
 ALTER TABLE `Doctor`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `PHONE_NUM` (`PHONE_NUM`);
 
 --
 -- Indexes for table `drug`
 --
 ALTER TABLE `drug`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `hospital`
 --
 ALTER TABLE `hospital`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`ID`),
+  ADD UNIQUE KEY `PHONE_NUMBER` (`PHONE_NUMBER`),
+  ADD UNIQUE KEY `EMAIL` (`EMAIL`);
 
 --
 -- Indexes for table `Presecription`
 --
 ALTER TABLE `Presecription`
-  ADD PRIMARY KEY (`rxNumber`);
+  ADD PRIMARY KEY (`RX_NUMBER`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
