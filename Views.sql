@@ -31,11 +31,11 @@ CREATE VIEW DOCTOR_PATIENT_COUNT AS
 	GROUP BY d.ID 
 	ORDER BY COUNT(*) DESC;
 
-# Finding the total quantity of drug available on inventory based on manfacturing id
+# Finding the total quantity of drug available on inventory based on manfacturing id if manufacturing id is 4 but it could be other id numbers as well. 
 CREATE VIEW DRUG_QUANTITY_AVAILABLE AS
 	SELECT SUM(QUANTITY) FROM Inventory WHERE MANUFACTURER_ID=4;
 
-# Finding the total quantity of drug available on inventory based on drug id
+# Finding the total quantity of drug available on inventory based on drug id if drug id is 4 but it could be other id numbers as well.
 CREATE VIEW DRUG_QUANTITY_AVAILABLE AS
 	SELECT SUM(QUANTITY) FROM Inventory WHERE  DRUG_ID=4;
 
