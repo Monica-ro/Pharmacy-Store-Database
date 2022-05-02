@@ -278,8 +278,9 @@ ALTER TABLE pharmacy.Consumer
  
 # create Allergies table
 CREATE Table pharmacy.Allergies (
-	CONSUMER_ID INT NOT NULL PRIMARY KEY,
-	ALLERGIES VARCHAR(40)
+	ID INT NOT NULL PRIMARY KEY,
+	CONSUMER_ID INT NOT NULL,
+	ALLERGIES VARCHAR(40) NOT NULL
 );
 
 # add a foreign key for Consumer ID to Allergies
