@@ -1,26 +1,46 @@
 # create Pharmacy schema
 CREATE SCHEMA pharmacy;
 
-
-# create doctor table
-CREATE TABLE pharmacy.Doctor (
-  ID int NOT NULL,
-  FIRST_NAME varchar(30) NOT NULL,
-  LAST_NAME varchar(30) NOT NULL,
-  PHONE_NUM VARCHAR(9) NOT NULL,
-  HOSPITAL_ID NOT NULL
-); 
-
--- Indexes for table Doctor
---
-ALTER TABLE Doctor
-  ADD PRIMARY KEY (ID),
-  ADD UNIQUE KEY PHONE_NUM (PHONE_NUM);
-
-
 ## Table structure for table drug
 
+# create Manufacturer table
+CREATE Table pharmacy.Manufacturer(
+	ID INT NOT NULL PRIMARY KEY,
+	NAME VARCHAR(30) NOT NULL,
+	ADDRESS VARCHAR(50) NOT NULL,
+	CITY VARCHAR(30) NOT NULL,
+	STATE VARCHAR(2) NOT NULL,
+	ZIP_CODE INT NOT NULL, 
+	PHONE_NUM VARCHAR(9) NOT NULL,
+	EMAIL VARCHAR(50) NOT NULL
+);
 
+# Add constraint: email must include an @ symbol
+ALTER TABLE pharmacy.Manufacturer
+ ADD CONSTRAINT MANUFACTURER_CK_EMAIL
+CHECK (EMAIL LIKE '%@%.%');
+
+# Add constraint: zipcode should range between 10000 and 99999
+ALTER TABLE pharmacy.Manufacturer
+ ADD CONSTRAINT MANUFACTURER_CK_ZIPCODE
+CHECK (ZIP_CODE >= 10000 AND ZIP_CODE <= 99999);
+
+# add unique constraint to email and phone number
+ALTER TABLE pharmacy.Manufacturer
+ ADD CONSTRAINT MANUFACTURER_UQ_PHONENUM
+UNIQUE (PHONE_NUM);
+
+ALTER TABLE pharmacy.Manufacturer
+ ADD CONSTRAINT MANUFACTURER_UQ_EMAIL
+UNIQUE (EMAIL);
+
+# address should not be a PO box
+ALTER TABLE pharmacy.Manufacturer
+ ADD CONSTRAINT MANUFACTURER_CK_ADDRESS
+CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
+
+
+# create drug id
 CREATE TABLE pharmacy.DRUG(
   ID int NOT NULL,
   NAME varchar(30) NOT NULL,
@@ -38,6 +58,11 @@ CREATE TABLE pharmacy.DRUG(
 --
 ALTER TABLE drug
   ADD PRIMARY KEY (ID);
+  
+# manufacturer id  foreign key
+ALTER TABLE DRUG
+ ADD CONSTRAINT DRUG_FK_MANUFACTURER_ID
+FOREIGN KEY (MANUFACTURER_ID) REFERENCES pharmacy.Manufacturer(ID);
 
 
 -- Table structure for table hospital
@@ -59,6 +84,27 @@ ALTER TABLE hospital
   ADD PRIMARY KEY (ID),
   ADD UNIQUE KEY PHONE_NUMBER (PHONE_NUMBER),
   ADD UNIQUE KEY EMAIL (EMAIL);
+
+
+# create doctor table
+CREATE TABLE pharmacy.Doctor (
+  ID int NOT NULL,
+  FIRST_NAME varchar(30) NOT NULL,
+  LAST_NAME varchar(30) NOT NULL,
+  PHONE_NUM VARCHAR(9) NOT NULL,
+  HOSPITAL_ID INT NOT NULL
+); 
+
+-- Indexes for table Doctor
+--
+ALTER TABLE Doctor
+  ADD PRIMARY KEY (ID),
+  ADD UNIQUE KEY PHONE_NUM (PHONE_NUM);
+
+# hospital ID foreign key
+ALTER TABLE Doctor
+ ADD CONSTRAINT DOCTOR_FK_HOSPITAL_ID
+FOREIGN KEY (HOSPITAL_ID) REFERENCES pharmacy.Hospital(ID);
 
 # create Staff table
 CREATE Table pharmacy.Staff(
@@ -98,42 +144,6 @@ ALTER TABLE pharmacy.Staff
  ADD CONSTRAINT STAFF_CK_ADDRESS
 CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
 
-# create Manufacturer table
-CREATE Table pharmacy.Manufacturer(
-	ID INT NOT NULL PRIMARY KEY,
-	NAME VARCHAR(30) NOT NULL,
-	ADDRESS VARCHAR(50) NOT NULL,
-	CITY VARCHAR(30) NOT NULL,
-	STATE VARCHAR(2) NOT NULL,
-	ZIP_CODE INT NOT NULL, 
-	PHONE_NUM VARCHAR(9) NOT NULL,
-	EMAIL VARCHAR(50) NOT NULL
-);
-
-# Add constraint: email must include an @ symbol
-ALTER TABLE pharmacy.Manufacturer
- ADD CONSTRAINT MANUFACTURER_CK_EMAIL
-CHECK (EMAIL LIKE '%@%.%');
-
-# Add constraint: zipcode should range between 10000 and 99999
-ALTER TABLE pharmacy.Manufacturer
- ADD CONSTRAINT MANUFACTURER_CK_ZIPCODE
-CHECK (ZIP_CODE >= 10000 AND ZIP_CODE <= 99999);
-
-# add unique constraint to email and phone number
-ALTER TABLE pharmacy.Manufacturer
- ADD CONSTRAINT MANUFACTURER_UQ_PHONENUM
-UNIQUE (PHONE_NUM);
-
-ALTER TABLE pharmacy.Manufacturer
- ADD CONSTRAINT MANUFACTURER_UQ_EMAIL
-UNIQUE (EMAIL);
-
-# address should not be a PO box
-ALTER TABLE pharmacy.Manufacturer
- ADD CONSTRAINT MANUFACTURER_CK_ADDRESS
-CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
-
 # create Inventory table
 CREATE Table pharmacy.Inventory(
 	DRUG_ID INT NOT NULL PRIMARY KEY,
@@ -164,6 +174,10 @@ CREATE Table pharmacy.OrderForm(
 
 # add foreign key constraint to
 # drugID
+ALTER TABLE pharmacy.OrderForm
+ ADD CONSTRAINT ORDERFORM_FK_DRUGID
+FOREIGN KEY(DRUG_ID) REFERENCES pharmacy.Drug(ID);
+
 
 # add foreign key constraint to manufacturerID
 ALTER TABLE pharmacy.OrderForm
@@ -291,5 +305,14 @@ CREATE TABLE Prescription (
 --
 ALTER TABLE Prescription
   ADD PRIMARY KEY (RX_NUMBER);
+
+  
+# Add doctor id foreign key to prescription
+  ALTER TABLE pharmacy.Prescription
+  	ADD CONSTRAINT PRESCRIPTION_FK_DOCTOR_ID FOREIGN KEY (DOCTOR_ID) REFERENCES pharmacy.Doctor(ID);
+	
+# Add consumer id foreign key to prescription
+  ALTER TABLE pharmacy.Prescription
+  	ADD CONSTRAINT PRESCRIPTION_FK_CONSUMER_ID FOREIGN KEY (CONSUMER_ID) REFERENCES pharmacy.Consumer(ID);
 
 
