@@ -33,9 +33,9 @@ CREATE VIEW DOCTOR_PATIENT_COUNT AS
 
 # Finding the total quantity of drug available on inventory based on manfacturing id
 CREATE VIEW DRUG_QUANTITY_AVAILABLE AS
-SELECT SUM(QUANTITY) FROM Inventory WHERE MANUFACTURER_ID=4;
+	SELECT SUM(QUANTITY) FROM Inventory WHERE MANUFACTURER_ID=4;
 
 # Finding the total quantity of drug available on inventory based on drug id
 CREATE VIEW DRUG_QUANTITY_AVAILABLE AS
-SELECT SUM(QUANTITY) FROM Inventory WHERE  DRUG_ID=4;
+	SELECT SUM(QUANTITY) FROM Inventory WHERE  DRUG_ID=4;
 
