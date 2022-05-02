@@ -93,7 +93,7 @@ ALTER TABLE pharmacy.Staff
  ADD CONSTRAINT STAFF_UQ_EMAIL
 UNIQUE (EMAIL);
 
-# address shouldn't be a PO box in staff table
+# address should not be a PO box in staff table
 ALTER TABLE pharmacy.Staff
  ADD CONSTRAINT STAFF_CK_ADDRESS
 CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
@@ -129,7 +129,7 @@ ALTER TABLE pharmacy.Manufacturer
  ADD CONSTRAINT MANUFACTURER_UQ_EMAIL
 UNIQUE (EMAIL);
 
-# address shouldn't be a PO box
+# address should not be a PO box
 ALTER TABLE pharmacy.Manufacturer
  ADD CONSTRAINT MANUFACTURER_CK_ADDRESS
 CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
@@ -178,7 +178,7 @@ FOREIGN KEY (STAFF_ID) REFERENCES pharmacy.Staff(ID);
 ## Code from Neeha #
 
 # create Consumer table
-CREATE Table pharmacy.CONSUMER (
+CREATE Table pharmacy.Consumer (
 	ID INT NOT NULL PRIMARY KEY,
 	FIRST_NAME VARCHAR(30) NOT NULL,
 	LAST_NAME VARCHAR(30) NOT NULL,
@@ -194,28 +194,28 @@ CREATE Table pharmacy.CONSUMER (
 );
 
 # email, address, and zip code should be valid
-ALTER TABLE pharmacy.CONSUMER
+ALTER TABLE pharmacy.Consumer
 	ADD CONSTRAINT CONSUMER_CK_EMAIL CHECK (EMAIL LIKE '%@%.%');
 	
-ALTER TABLE pharmacy.CONSUMER
+ALTER TABLE pharmacy.Consumer
 	ADD CONSTRAINT CONSUMER_CK_ADDRESS CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
 	
-ALTER TABLE pharmacy.CONSUMER
+ALTER TABLE pharmacy.Consumer
 	ADD CONSTRAINT CONSUMER_CK_ZIP_CODE CHECK (ZIP_CODE >= 10000 AND ZIP_CODE <= 99999);
 
 # phone number and email must be unique
-ALTER TABLE pharmacy.CONSUMER
+ALTER TABLE pharmacy.Consumer
 	ADD CONSTRAINT CONSUMER_UQ_PHONE_NUM UNIQUE (PHONE_NUM);
 
-ALTER TABLE pharmacy.CONSUMER
+ALTER TABLE pharmacy.Consumer
 	ADD CONSTRAINT CONSUMER_UQ_EMAIL UNIQUE (EMAIL);
  
 # adding a foreign key for Doctor ID to Consumer
-ALTER TABLE pharmacy.CONSUMER
-	ADD CONSTRAINT CONSUMER_FK_DOCTOR FOREIGN KEY (DOCTOR_ID) REFERENCES pharmacy.DOCTOR(ID);
+ALTER TABLE pharmacy.Consumer
+	ADD CONSTRAINT CONSUMER_FK_DOCTOR FOREIGN KEY (DOCTOR_ID) REFERENCES pharmacy.Doctor(ID);
 
 # create Insurance table
-CREATE Table pharmacy.INSURANCE (
+CREATE Table pharmacy.Insurance (
 	ID INT NOT NULL PRIMARY KEY,
 	NAME VARCHAR(30) NOT NULL,
 	ADDRESS VARCHAR(50) NOT NULL,
@@ -228,24 +228,24 @@ CREATE Table pharmacy.INSURANCE (
 );
 
 # email, address, and zip code should be valid
-ALTER TABLE pharmacy.INSURANCE
+ALTER TABLE pharmacy.Insurance
 	ADD CONSTRAINT INSURANCE_CK_EMAIL CHECK (EMAIL LIKE '%@%.%');
 
-ALTER TABLE pharmacy.INSURANCE
+ALTER TABLE pharmacy.Insurance
 	ADD CONSTRAINT INSURANCE_CK_ADDRESS CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
  
-ALTER TABLE pharmacy.INSURANCE
+ALTER TABLE pharmacy.Insurance
 	ADD CONSTRAINT INSURANCE_CK_ZIPCODE CHECK (ZIP_CODE >= 10000 AND ZIP_CODE <= 99999);
  
  # phone number and email must be unique
-ALTER TABLE pharmacy.INSURANCE
+ALTER TABLE pharmacy.Insurance
 	ADD CONSTRAINT INSURANCE_UQ_PHONE_NUM UNIQUE (PHONE_NUM);
 
-ALTER TABLE pharmacy.INSURANCE
+ALTER TABLE pharmacy.Insurance
 	ADD CONSTRAINT INSURANCE_UQ_EMAIL UNIQUE (EMAIL);
  
 # create Insurance Member table
-CREATE Table pharmacy.INSURANCE_MEMBER (
+CREATE Table pharmacy.Insurance_Member (
 	ID INT NOT NULL PRIMARY KEY,
 	INSURANCE_MEMBER_ID UNIQUE INT,
 	INSURANCE_GROUP_NUM INT,
@@ -254,22 +254,22 @@ CREATE Table pharmacy.INSURANCE_MEMBER (
 );
 
 # add a foreign key for Insurance ID to Insurance Member
-ALTER TABLE pharmacy.INSURANCE_MEMBER
-	ADD CONSTRAINT INSURANCE_MEMBER_FK_INSURANCE FOREIGN KEY (INSURANCE_ID) REFERENCES pharmacy.INSURANCE(ID);
+ALTER TABLE pharmacy.Insurance_Member
+	ADD CONSTRAINT INSURANCE_MEMBER_FK_INSURANCE FOREIGN KEY (INSURANCE_ID) REFERENCES pharmacy.Insurance(ID);
  
 # add a foreign key for Insurance Member ID to Consumer
-ALTER TABLE pharmacy.CONSUMER
-	ADD CONSTRAINT CONSUMER_FK_VALID_INSURANCE_ID FOREIGN KEY (VALID_INSURANCE_ID) REFERENCES pharmacy.INSURANCE_MEMBER(ID);
+ALTER TABLE pharmacy.Consumer
+	ADD CONSTRAINT CONSUMER_FK_VALID_INSURANCE_ID FOREIGN KEY (VALID_INSURANCE_ID) REFERENCES pharmacy.Insurance_Member(ID);
  
 # create Allergies table
-CREATE Table pharmacy.ALLERGIES (
+CREATE Table pharmacy.Allergies (
 	CONSUMER_ID INT NOT NULL PRIMARY KEY,
 	ALLERGIES VARCHAR(40)
 );
 
 # add a foreign key for Consumer ID to Allergies
-ALTER TABLE pharmacy.ALLERGIES
-	ADD CONSTRAINT CONSUMER_FK_CONSUMER_ID FOREIGN KEY (CONSUMER_ID) REFERENCES pharmacy.CONSUMER(ID);
+ALTER TABLE pharmacy.Allergies
+	ADD CONSTRAINT CONSUMER_FK_CONSUMER_ID FOREIGN KEY (CONSUMER_ID) REFERENCES pharmacy.Consumer(ID);
 
 
 -- Table structure for table Prescription
