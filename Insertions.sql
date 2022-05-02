@@ -41,3 +41,66 @@ VALUES (4, "Pharmacist", "Brandon", "Smith", "6532 Village Drive", "San Jose", "
 
 INSERT INTO pharmacy.Staff (ID, JOB_TITLE, FIRST_NAME, LAST_NAME, ADDRESS, CITY, STATE, ZIP_CODE, PHONE_NUM, EMAIL) 
 VALUES (5, "Pharmacist", "Blake", "Nguyen", "539 Blank Drive", "San Jose", "CA", 95123, "4081234571", "blake.nguyen@gmail.com");
+
+
+# update name data type from manufacturer table
+ALTER TABLE pharmacy2.Manufacturer
+	MODIFY NAME VARCHAR(70);
+
+# MANUFACTURER INSERTIONS
+INSERT INTO pharmacy2.Manufacturer (ID, NAME, ADDRESS, CITY, STATE, ZIP_CODE, PHONE_NUM, EMAIL) 
+VALUES (1, "Johnson & Johnson", "123 Johnson Drive", "San Francisco", "CA", 94321, "5312234567", "inquiries@jnj.com");
+
+INSERT INTO pharmacy2.Manufacturer (ID, NAME, ADDRESS, CITY, STATE, ZIP_CODE, PHONE_NUM, EMAIL) 
+VALUES (2, "Pfizer", "123 Pfizer Ave", "Baltimore", "MD", 92493, "5312234568", "inquiries@pfizer.com");
+
+INSERT INTO pharmacy2.Manufacturer (ID, NAME, ADDRESS, CITY, STATE, ZIP_CODE, PHONE_NUM, EMAIL) 
+VALUES (3, "Roche", "123 Roche Drive", "San Francisco", "CA", 94321, "5312234569", "inquiries@roche.com");
+
+INSERT INTO pharmacy2.Manufacturer (ID, NAME, ADDRESS, CITY, STATE, ZIP_CODE, PHONE_NUM, EMAIL) 
+VALUES (4, "Novartis", "1234 Novartis Ave", "San Francisco", "CA", 94321, "5312234570", "inquiries@novartis.com");
+
+INSERT INTO pharmacy2.Manufacturer (ID, NAME, ADDRESS, CITY, STATE, ZIP_CODE, PHONE_NUM, EMAIL) 
+VALUES (5, "AbbVie", "455 Sierra Drive", "San Francisco", "CA", 94321, "5312234567", "inquiries@AbbVie.com");
+
+
+# order form insertions
+
+INSERT INTO pharmacy2.OrderForm (ID, ORDER_DATE, MANUFACTURER_ID, ORDER_QUANTITY, STAFF_ID) 
+VALUES (1, "2022-04-15", 2, 1,3);
+
+INSERT INTO pharmacy2.OrderForm (ID, ORDER_DATE, MANUFACTURER_ID, ORDER_QUANTITY, STAFF_ID) 
+VALUES (2, "2022-04-18", 2, 2,4);
+
+INSERT INTO pharmacy2.OrderForm (ID, ORDER_DATE, MANUFACTURER_ID, ORDER_QUANTITY, STAFF_ID) 
+VALUES (3, "2022-04-18", 1, 1,4);
+
+INSERT INTO pharmacy2.OrderForm (ID, ORDER_DATE, MANUFACTURER_ID, ORDER_QUANTITY, STAFF_ID) 
+VALUES (4, "2022-04-20", 5, 1,2);
+
+INSERT INTO pharmacy2.OrderForm (ID, ORDER_DATE, MANUFACTURER_ID, ORDER_QUANTITY, STAFF_ID) 
+VALUES (5, "2022-04-22", 4, 1,5);
+
+
+
+
+# update inventory variable type
+ALTER TABLE pharmacy2.Inventory
+	MODIFY LOCATION VARCHAR(200);
+  
+# inventory insertions
+INSERT INTO pharmacy2.Inventory (DRUG_ID, MANUFACTURER_ID, QUANTITY, LOCATION) 
+VALUES (1, 2, 5, "Walgreens - South San Jose");
+
+INSERT INTO pharmacy2.Inventory (DRUG_ID, MANUFACTURER_ID, QUANTITY, LOCATION) 
+VALUES (3, 4, 100, "Walgreens - South San Jose");
+
+INSERT INTO pharmacy2.Inventory (DRUG_ID, MANUFACTURER_ID, QUANTITY, LOCATION) 
+VALUES (2, 2, 50, "Walgreens - South San Jose");
+
+INSERT INTO pharmacy2.Inventory (DRUG_ID, MANUFACTURER_ID, QUANTITY, LOCATION) 
+VALUES (4, 4, 200, "Walgreens - South San Jose");
+
+INSERT INTO pharmacy2.Inventory (DRUG_ID, MANUFACTURER_ID, QUANTITY, LOCATION) 
+VALUES (5, 2, 200, "Walgreens - South San Jose");
+
