@@ -55,3 +55,7 @@ CREATE VIEW DRUG_QUANTITY_AVAILABLE AS
 # Finding the total quantity of drug available on inventory based on location.
 CREATE VIEW DRUG_QUANTITY_AVAILABLE AS
 	SELECT QUANTITY FROM Inventory WHERE LOCATION="Aisle 10, Cabinet 3";
+
+# Finding the information of drug available on inventory based on quantity. This is if quantity is less than 100.
+CREATE VIEW DRUG_INVENTORY_INFORMATION AS
+	SELECT * FROM Inventory WHERE QUANTITY<100;
