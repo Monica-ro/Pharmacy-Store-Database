@@ -1,6 +1,65 @@
 # create Pharmacy schema
 CREATE SCHEMA pharmacy;
 
+
+# create doctor table
+CREATE TABLE pharmacy.Doctor (
+  ID int NOT NULL,
+  FIRST_NAME varchar(30) NOT NULL,
+  LAST_NAME varchar(30) NOT NULL,
+  PHONE_NUM VARCHAR(9) NOT NULL,
+  HOSPITAL_ID NOT NULL
+); 
+
+-- Indexes for table Doctor
+--
+ALTER TABLE Doctor
+  ADD PRIMARY KEY (ID),
+  ADD UNIQUE KEY PHONE_NUM (PHONE_NUM);
+
+
+## Table structure for table drug
+
+
+CREATE TABLE pharmacy.DRUG(
+  ID int NOT NULL,
+  NAME varchar(30) NOT NULL,
+  DATE_OF_MANUFACTURE date NOT NULL,
+  EXPIRATION_DATE date NOT NULL,
+  DRUGTYPE varchar(20) NOT NULL,
+  MANUFACTURER_ID int NOT NULL,
+  MANUFACTURING_COST int NOT NULL,
+  DESCRIPTION varchar(90) NOT NULL
+);
+
+-- --------------------------------------------------------
+
+-- Indexes for table drug
+--
+ALTER TABLE drug
+  ADD PRIMARY KEY (ID);
+
+
+-- Table structure for table hospital
+
+CREATE TABLE hospital (
+  ID int NOT NULL,
+  NAME varchar(19) NOT NULL,
+  ADDRESS varchar(100) NOT NULL,
+  CITY varchar(19) NOT NULL,
+  STATE varchar(2) NOT NULL,
+  ZIPCODE int NOT NULL,
+  PHONE_NUMBER VARCHAR(9) NOT NULL,
+  EMAIL varchar(19) NOT NULL
+);
+
+-- Indexes for table hospital
+--
+ALTER TABLE hospital
+  ADD PRIMARY KEY (ID),
+  ADD UNIQUE KEY PHONE_NUMBER (PHONE_NUMBER),
+  ADD UNIQUE KEY EMAIL (EMAIL);
+
 # create Staff table
 CREATE Table pharmacy.Staff(
 	ID INT NOT NULL PRIMARY KEY,
@@ -213,52 +272,9 @@ ALTER TABLE pharmacy.ALLERGIES
 	ADD CONSTRAINT CONSUMER_FK_CONSUMER_ID FOREIGN KEY (CONSUMER_ID) REFERENCES pharmacy.CONSUMER(ID);
 
 
+-- Table structure for table Prescription
 
-## Code from Krishna ##
-
-CREATE TABLE pharmacy.Doctor (
-  ID int NOT NULL,
-  FIRST_NAME varchar(30) NOT NULL,
-  LAST_NAME varchar(30) NOT NULL,
-  PHONE_NUM VARCHAR(9) NOT NULL,
-  HOSPITAL_ID NOT NULL
-); 
-
-## Table structure for table drug
-
-
-CREATE TABLE pharmacy.DRUG(
-  ID int NOT NULL,
-  NAME varchar(30) NOT NULL,
-  DATE_OF_MANUFACTURE date NOT NULL,
-  EXPIRATION_DATE date NOT NULL,
-  DRUGTYPE varchar(20) NOT NULL,
-  MANUFACTURER_ID int NOT NULL,
-  MANUFACTURING_COST int NOT NULL,
-  DESCRIPTION varchar(90) NOT NULL
-);
-
--- --------------------------------------------------------
-
---
--- Table structure for table hospital
---
-
-CREATE TABLE hospital (
-  ID int NOT NULL,
-  NAME varchar(19) NOT NULL,
-  ADDRESS varchar(100) NOT NULL,
-  CITY varchar(19) NOT NULL,
-  STATE varchar(2) NOT NULL,
-  ZIPCODE int NOT NULL,
-  PHONE_NUMBER VARCHAR(9) NOT NULL,
-  EMAIL varchar(19) NOT NULL
-);
-
--- Table structure for table Presecription
---
-
-CREATE TABLE Presecription (
+CREATE TABLE Prescription (
   RX_NUMBER int(19) NOT NULL,
   CONSUMER_ID int NOT NULL,
   DRUG_ID int NOT NULL,
@@ -271,34 +287,9 @@ CREATE TABLE Presecription (
 );
 
 --
--- Indexes for dumped tables
+-- Indexes for table Prescription
 --
-
---
--- Indexes for table Doctor
---
-ALTER TABLE Doctor
-  ADD PRIMARY KEY (ID),
-  ADD UNIQUE KEY PHONE_NUM (PHONE_NUM);
-
---
--- Indexes for table drug
---
-ALTER TABLE drug
-  ADD PRIMARY KEY (ID);
-
---
--- Indexes for table hospital
---
-ALTER TABLE hospital
-  ADD PRIMARY KEY (ID),
-  ADD UNIQUE KEY PHONE_NUMBER (PHONE_NUMBER),
-  ADD UNIQUE KEY EMAIL (EMAIL);
-
---
--- Indexes for table Presecription
---
-ALTER TABLE Presecription
+ALTER TABLE Prescription
   ADD PRIMARY KEY (RX_NUMBER);
 
 
