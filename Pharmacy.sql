@@ -1,10 +1,10 @@
-# create pharmacy2 schema
-CREATE SCHEMA pharmacy2;
+# create pharmacy schema
+CREATE SCHEMA pharmacy;
 
 ## Table structure for table drug
 
 # create Manufacturer table
-CREATE Table pharmacy2.Manufacturer(
+CREATE Table pharmacy.Manufacturer(
 	ID INT NOT NULL PRIMARY KEY,
 	NAME VARCHAR(30) NOT NULL,
 	ADDRESS VARCHAR(50) NOT NULL,
@@ -16,32 +16,32 @@ CREATE Table pharmacy2.Manufacturer(
 );
 
 # Add constraint: email must include an @ symbol
-ALTER TABLE pharmacy2.Manufacturer
+ALTER TABLE pharmacy.Manufacturer
  ADD CONSTRAINT MANUFACTURER_CK_EMAIL
 CHECK (EMAIL LIKE '%@%.%');
 
 # Add constraint: zipcode should range between 10000 and 99999
-ALTER TABLE pharmacy2.Manufacturer
+ALTER TABLE pharmacy.Manufacturer
  ADD CONSTRAINT MANUFACTURER_CK_ZIPCODE
 CHECK (ZIP_CODE >= 10000 AND ZIP_CODE <= 99999);
 
 # add unique constraint to email and phone number
-ALTER TABLE pharmacy2.Manufacturer
+ALTER TABLE pharmacy.Manufacturer
  ADD CONSTRAINT MANUFACTURER_UQ_PHONENUM
 UNIQUE (PHONE_NUM);
 
-ALTER TABLE pharmacy2.Manufacturer
+ALTER TABLE pharmacy.Manufacturer
  ADD CONSTRAINT MANUFACTURER_UQ_EMAIL
 UNIQUE (EMAIL);
 
 # address should not be a PO box
-ALTER TABLE pharmacy2.Manufacturer
+ALTER TABLE pharmacy.Manufacturer
  ADD CONSTRAINT MANUFACTURER_CK_ADDRESS
 CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
 
 
 # create drug id
-CREATE TABLE pharmacy2.DRUG(
+CREATE TABLE pharmacy.DRUG(
   ID int NOT NULL,
   NAME varchar(30) NOT NULL,
   DATE_OF_MANUFACTURE date NOT NULL,
@@ -54,17 +54,17 @@ CREATE TABLE pharmacy2.DRUG(
 
 -- Indexes for table drug
 --
-ALTER TABLE pharmacy2.drug
+ALTER TABLE pharmacy.drug
   ADD PRIMARY KEY (ID);
   
 # manufacturer id  foreign key
-ALTER TABLE pharmacy2.DRUG
+ALTER TABLE pharmacy.DRUG
  ADD CONSTRAINT DRUG_FK_MANUFACTURER_ID
-FOREIGN KEY (MANUFACTURER_ID) REFERENCES pharmacy2.Manufacturer(ID);
+FOREIGN KEY (MANUFACTURER_ID) REFERENCES pharmacy.Manufacturer(ID);
 
 -- Table structure for table hospital
 
-CREATE TABLE pharmacy2.Hospital (
+CREATE TABLE pharmacy.Hospital (
   ID int NOT NULL,
   NAME varchar(50) NOT NULL,
   ADDRESS varchar(100) NOT NULL,
@@ -77,14 +77,14 @@ CREATE TABLE pharmacy2.Hospital (
 
 -- Indexes for table hospital
 --
-ALTER TABLE pharmacy2.Hospital
+ALTER TABLE pharmacy.Hospital
   ADD PRIMARY KEY (ID),
   ADD UNIQUE KEY PHONE_NUM (PHONE_NUM),
   ADD UNIQUE KEY EMAIL (EMAIL);
 
 
 # create doctor table
-CREATE TABLE pharmacy2.Doctor (
+CREATE TABLE pharmacy.Doctor (
   ID int NOT NULL,
   FIRST_NAME varchar(30) NOT NULL,
   LAST_NAME varchar(30) NOT NULL,
@@ -94,17 +94,17 @@ CREATE TABLE pharmacy2.Doctor (
 
 -- Indexes for table Doctor
 --
-ALTER TABLE pharmacy2.Doctor
+ALTER TABLE pharmacy.Doctor
   ADD PRIMARY KEY (ID),
   ADD UNIQUE KEY PHONE_NUM (PHONE_NUM);
 
 # hospital ID foreign key
-ALTER TABLE pharmacy2.Doctor
+ALTER TABLE pharmacy.Doctor
  ADD CONSTRAINT DOCTOR_FK_HOSPITAL_ID
-FOREIGN KEY (HOSPITAL_ID) REFERENCES pharmacy2.Hospital(ID);
+FOREIGN KEY (HOSPITAL_ID) REFERENCES pharmacy.Hospital(ID);
 
 # create Staff table
-CREATE Table pharmacy2.Staff(
+CREATE Table pharmacy.Staff(
 	ID INT NOT NULL PRIMARY KEY,
 	JOB_TITLE VARCHAR(40) NOT NULL,
 	FIRST_NAME VARCHAR(30) NOT NULL,
@@ -118,31 +118,31 @@ CREATE Table pharmacy2.Staff(
 );
 
 # Add constraint: email must include an @ symbol
-ALTER TABLE pharmacy2.Staff
+ALTER TABLE pharmacy.Staff
  ADD CONSTRAINT STAFF_CK_EMAIL
 CHECK (EMAIL LIKE '%@%.%');
 
 # Add constraint: zipcode should range between 10000 and 99999
-ALTER TABLE pharmacy2.Staff
+ALTER TABLE pharmacy.Staff
  ADD CONSTRAINT STAFF_CK_ZIPCODE
 CHECK (ZIP_CODE >= 10000 AND ZIP_CODE <= 99999);
 
 # add unique constraint to email and phone number
-ALTER TABLE pharmacy2.Staff
+ALTER TABLE pharmacy.Staff
  ADD CONSTRAINT STAFF_UQ_PHONENUM
 UNIQUE (PHONE_NUM);
 
-ALTER TABLE pharmacy2.Staff
+ALTER TABLE pharmacy.Staff
  ADD CONSTRAINT STAFF_UQ_EMAIL
 UNIQUE (EMAIL);
 
 # address should not be a PO box in staff table
-ALTER TABLE pharmacy2.Staff
+ALTER TABLE pharmacy.Staff
  ADD CONSTRAINT STAFF_CK_ADDRESS
 CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
 
 # create Inventory table
-CREATE Table pharmacy2.Inventory(
+CREATE Table pharmacy.Inventory(
 	DRUG_ID INT NOT NULL PRIMARY KEY,
 	MANUFACTURER_ID INT NOT NULL,
 	QUANTITY INT NOT NULL, 
@@ -151,18 +151,18 @@ CREATE Table pharmacy2.Inventory(
 
 # add foreign key constraint to manufacturerID 
 # from the inventory table
-ALTER TABLE pharmacy2.Inventory
+ALTER TABLE pharmacy.Inventory
  ADD CONSTRAINT INVENTORY_FK_MANUFACTURERID
-FOREIGN KEY (MANUFACTURER_ID) REFERENCES pharmacy2.Manufacturer(ID);
+FOREIGN KEY (MANUFACTURER_ID) REFERENCES pharmacy.Manufacturer(ID);
 
 # add foreign key constraint to drugID 
 # from the inventory table
-ALTER TABLE pharmacy2.Inventory
+ALTER TABLE pharmacy.Inventory
  ADD CONSTRAINT INVENTORY_FK_DRUG_ID
-FOREIGN KEY (DRUG_ID) REFERENCES pharmacy2.Drug(ID);
+FOREIGN KEY (DRUG_ID) REFERENCES pharmacy.Drug(ID);
 
 # create Order Form table
-CREATE Table pharmacy2.OrderForm(
+CREATE Table pharmacy.OrderForm(
 	ID INT NOT NULL PRIMARY KEY,
 	ORDER_DATE  DATE NOT NULL,
 	DRUG_ID  INT NOT NULL,
@@ -173,23 +173,23 @@ CREATE Table pharmacy2.OrderForm(
 
 # add foreign key constraint to
 # drugID
-ALTER TABLE pharmacy2.OrderForm
+ALTER TABLE pharmacy.OrderForm
  ADD CONSTRAINT ORDERFORM_FK_DRUGID
-FOREIGN KEY(DRUG_ID) REFERENCES pharmacy2.Drug(ID);
+FOREIGN KEY(DRUG_ID) REFERENCES pharmacy.Drug(ID);
 
 
 # add foreign key constraint to manufacturerID
-ALTER TABLE pharmacy2.OrderForm
+ALTER TABLE pharmacy.OrderForm
  ADD CONSTRAINT ORDERFORM_FK_MANUFACTURERID
-FOREIGN KEY (MANUFACTURER_ID) REFERENCES pharmacy2.Manufacturer(ID);
+FOREIGN KEY (MANUFACTURER_ID) REFERENCES pharmacy.Manufacturer(ID);
 
 # add foreign key constraint to staffID
-ALTER TABLE pharmacy2.OrderForm
+ALTER TABLE pharmacy.OrderForm
  ADD CONSTRAINT ORDERFORM_FK_STAFFID
-FOREIGN KEY (STAFF_ID) REFERENCES pharmacy2.Staff(ID);
+FOREIGN KEY (STAFF_ID) REFERENCES pharmacy.Staff(ID);
 
 # create Consumer table
-CREATE Table pharmacy2.Consumer (
+CREATE Table pharmacy.Consumer (
 	ID INT NOT NULL PRIMARY KEY,
 	FIRST_NAME VARCHAR(30) NOT NULL,
 	LAST_NAME VARCHAR(30) NOT NULL,
@@ -205,34 +205,34 @@ CREATE Table pharmacy2.Consumer (
 );
 
 # email, address, and zip code should be valid
-ALTER TABLE pharmacy2.Consumer
+ALTER TABLE pharmacy.Consumer
 	ADD CONSTRAINT CONSUMER_CK_EMAIL CHECK (EMAIL LIKE '%@%.%');
 	
-ALTER TABLE pharmacy2.Consumer
+ALTER TABLE pharmacy.Consumer
 	ADD CONSTRAINT CONSUMER_CK_ADDRESS CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
 	
-ALTER TABLE pharmacy2.Consumer
+ALTER TABLE pharmacy.Consumer
 	ADD CONSTRAINT CONSUMER_CK_ZIP_CODE CHECK (ZIP_CODE >= 10000 AND ZIP_CODE <= 99999);
 
 # phone number and email must be unique
-#ALTER TABLE pharmacy2.Consumer
+#ALTER TABLE pharmacy.Consumer
 #	ADD CONSTRAINT CONSUMER_UQ_PHONE_NUM UNIQUE (PHONE_NUM);
 
-#ALTER TABLE pharmacy2.Consumer
+#ALTER TABLE pharmacy.Consumer
 #	ADD CONSTRAINT CONSUMER_UQ_EMAIL UNIQUE (EMAIL);
     
-#ALTER TABLE pharmacy2.Consumer
+#ALTER TABLE pharmacy.Consumer
 #	DROP CONSTRAINT CONSUMER_UQ_EMAIL;
     
-#ALTER TABLE pharmacy2.Consumer
+#ALTER TABLE pharmacy.Consumer
 #	DROP CONSTRAINT CONSUMER_UQ_PHONE_NUM;
  
 # adding a foreign key for Doctor ID to Consumer
-ALTER TABLE pharmacy2.Consumer
-	ADD CONSTRAINT CONSUMER_FK_DOCTOR FOREIGN KEY (DOCTOR_ID) REFERENCES pharmacy2.Doctor(ID);
+ALTER TABLE pharmacy.Consumer
+	ADD CONSTRAINT CONSUMER_FK_DOCTOR FOREIGN KEY (DOCTOR_ID) REFERENCES pharmacy.Doctor(ID);
 
 # create Insurance table
-CREATE Table pharmacy2.Insurance (
+CREATE Table pharmacy.Insurance (
 	ID INT NOT NULL PRIMARY KEY,
 	NAME VARCHAR(30) NOT NULL,
 	ADDRESS VARCHAR(50) NOT NULL,
@@ -245,17 +245,17 @@ CREATE Table pharmacy2.Insurance (
 );
 
 # email, address, and zip code should be valid
-ALTER TABLE pharmacy2.Insurance
+ALTER TABLE pharmacy.Insurance
 	ADD CONSTRAINT INSURANCE_CK_EMAIL CHECK (EMAIL LIKE '%@%.%');
 
-ALTER TABLE pharmacy2.Insurance
+ALTER TABLE pharmacy.Insurance
 	ADD CONSTRAINT INSURANCE_CK_ADDRESS CHECK ( (ADDRESS NOT LIKE '%P.O.%Box%') OR (ADDRESS NOT LIKE '%P%O%Box%'));
  
-ALTER TABLE pharmacy2.Insurance
+ALTER TABLE pharmacy.Insurance
 	ADD CONSTRAINT INSURANCE_CK_ZIPCODE CHECK (ZIP_CODE >= 10000 AND ZIP_CODE <= 99999);
  
 # create Insurance Member table
-CREATE Table pharmacy2.Insurance_Member (
+CREATE Table pharmacy.Insurance_Member (
 	ID INT NOT NULL PRIMARY KEY,
 	INSURANCE_MEMBER_ID INT,
 	INSURANCE_GROUP_NUM INT,
@@ -264,30 +264,30 @@ CREATE Table pharmacy2.Insurance_Member (
 );
 
 # add a unique constraint to Insurance member ID from the Insurance Member table
-ALTER TABLE pharmacy2.Insurance_Member
+ALTER TABLE pharmacy.Insurance_Member
 	ADD CONSTRAINT INSURANCE_MEMBER_ID_UQ_INSURANCE 
     UNIQUE (INSURANCE_MEMBER_ID);
  
 # add a foreign key for Insurance ID to Insurance Member
-ALTER TABLE pharmacy2.Insurance_Member
-	ADD CONSTRAINT INSURANCE_MEMBER_FK_INSURANCE FOREIGN KEY (INSURANCE_ID) REFERENCES pharmacy2.Insurance(ID);
+ALTER TABLE pharmacy.Insurance_Member
+	ADD CONSTRAINT INSURANCE_MEMBER_FK_INSURANCE FOREIGN KEY (INSURANCE_ID) REFERENCES pharmacy.Insurance(ID);
  
 # add a foreign key for Insurance Member ID to Consumer
-ALTER TABLE pharmacy2.Consumer
-	ADD CONSTRAINT CONSUMER_FK_VALID_INSURANCE_ID FOREIGN KEY (VALID_INSURANCE_ID) REFERENCES pharmacy2.Insurance_Member(ID);
+ALTER TABLE pharmacy.Consumer
+	ADD CONSTRAINT CONSUMER_FK_VALID_INSURANCE_ID FOREIGN KEY (VALID_INSURANCE_ID) REFERENCES pharmacy.Insurance_Member(ID);
  
 # create Allergies table
-CREATE Table pharmacy2.Allergies (
+CREATE Table pharmacy.Allergies (
 	CONSUMER_ID INT NOT NULL PRIMARY KEY,
 	ALLERGIES VARCHAR(40)
 );
 
 # add a foreign key for Consumer ID to Allergies
-ALTER TABLE pharmacy2.Allergies
-	ADD CONSTRAINT CONSUMER_FK_CONSUMER_ID FOREIGN KEY (CONSUMER_ID) REFERENCES pharmacy2.Consumer(ID);
+ALTER TABLE pharmacy.Allergies
+	ADD CONSTRAINT CONSUMER_FK_CONSUMER_ID FOREIGN KEY (CONSUMER_ID) REFERENCES pharmacy.Consumer(ID);
 
 -- Table structure for table Prescription
-CREATE TABLE pharmacy2.Prescription (
+CREATE TABLE pharmacy.Prescription (
   RX_NUMBER int NOT NULL,
   CONSUMER_ID int NOT NULL,
   DRUG_ID int NOT NULL,
@@ -300,14 +300,14 @@ CREATE TABLE pharmacy2.Prescription (
 );
 
 -- Indexes for table Prescription
-ALTER TABLE pharmacy2.Prescription
+ALTER TABLE pharmacy.Prescription
   ADD PRIMARY KEY (RX_NUMBER);
 
 # Add doctor id foreign key to prescription
-  ALTER TABLE pharmacy2.Prescription
-  	ADD CONSTRAINT PRESCRIPTION_FK_DOCTOR_ID FOREIGN KEY (DOCTOR_ID) REFERENCES pharmacy2.Doctor(ID);
+  ALTER TABLE pharmacy.Prescription
+  	ADD CONSTRAINT PRESCRIPTION_FK_DOCTOR_ID FOREIGN KEY (DOCTOR_ID) REFERENCES pharmacy.Doctor(ID);
 	
 # Add consumer id foreign key to prescription
-  ALTER TABLE pharmacy2.Prescription
-  	ADD CONSTRAINT PRESCRIPTION_FK_CONSUMER_ID FOREIGN KEY (CONSUMER_ID) REFERENCES pharmacy2.Consumer(ID);
+  ALTER TABLE pharmacy.Prescription
+  	ADD CONSTRAINT PRESCRIPTION_FK_CONSUMER_ID FOREIGN KEY (CONSUMER_ID) REFERENCES pharmacy.Consumer(ID);
 
