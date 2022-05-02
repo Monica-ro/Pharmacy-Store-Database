@@ -130,17 +130,17 @@ ALTER TABLE pharmacy.Inventory
   
 # inventory insertions
 INSERT INTO pharmacy.Inventory (DRUG_ID, MANUFACTURER_ID, QUANTITY, LOCATION) 
-VALUES (1, 2, 5, "Walgreens - South San Jose");
+VALUES (1, 2, 5, "Aisle 1, Cabinet 2");
 
 INSERT INTO pharmacy.Inventory (DRUG_ID, MANUFACTURER_ID, QUANTITY, LOCATION) 
-VALUES (3, 4, 100, "Walgreens - South San Jose");
+VALUES (3, 4, 100, "Aisle 1, Cabinet 4");
 
 INSERT INTO pharmacy.Inventory (DRUG_ID, MANUFACTURER_ID, QUANTITY, LOCATION) 
-VALUES (2, 2, 50, "Walgreens - South San Jose");
+VALUES (2, 2, 50, "Aisle 10, Cabinet 3");
 
 INSERT INTO pharmacy.Inventory (DRUG_ID, MANUFACTURER_ID, QUANTITY, LOCATION) 
-VALUES (4, 4, 200, "Walgreens - South San Jose");
+VALUES (4, 4, 200, "Aisle 3, Cabinet 2");
 
 INSERT INTO pharmacy.Inventory (DRUG_ID, MANUFACTURER_ID, QUANTITY, LOCATION) 
-VALUES (5, 2, 200, "Walgreens - South San Jose");
+VALUES (5, 2, 200, "Aisle 2, Cabinet 1");
 
